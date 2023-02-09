@@ -12,4 +12,11 @@ RUN apt-get update && apt-get install -y docker-ce-cli
 RUN groupadd -g 987 docker 
 # set jenkins into docker group.
 RUN usermod -aG docker jenkins
+
 USER jenkins
+
+COPY ./init-plugins/plugins.txt /usr/share/jenkins/ref/plugins.txt
+
+ENV JENKINS_HOME /var/jenkins_home
+
+RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
