@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    stages {
+        stage('Images & Pull') {
+            steps {
+                sh """
+                    docker images
+                    docker pull nginx
+                """
+            }
+        }
+        stage('Build') {
+            steps {
+                sh """
+                    docker build -t jenkins-docker:${BUILD_NUMBER} .
+                """
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh """
+                    docker images
+                """
+            }
+        }
+    }
+}
